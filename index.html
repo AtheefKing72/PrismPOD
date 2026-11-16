@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PrismDrop POD | Custom Printed Tees, Hoodies, Mugs & Rolled Posters</title>
+  <style>
+    :root {
+      --bg: #090b10;
+      --card: #131722;
+      --card-hover: #191f2e;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --grad-1: linear-gradient(135deg, #ff007f, #ff7b00);
+      --grad-2: linear-gradient(135deg, #00f2fe, #4facfe);
+      --grad-3: linear-gradient(135deg, #a855f7, #ec4899);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
+    body { background: var(--bg); color: var(--text); line-height: 1.6; }
+
+    /* Black Friday Banner */
+    .bf-banner {
+      background: var(--grad-1);
+      color: #fff;
+      text-align: center;
+      padding: 10px 15px;
+      font-weight: 700;
+      font-size: 0.92rem;
+      letter-spacing: 0.4px;
+    }
+    .bf-badge {
+      background: #090b10;
+      color: #ff7b00;
+      padding: 2px 8px;
+      border-radius: 4px;
+      margin-right: 8px;
+      font-size: 0.78rem;
+      font-weight: 800;
+    }
+
+    /* Header */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 6%;
+      background: rgba(9, 11, 16, 0.95);
+      backdrop-filter: blur(10px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid #1e293b;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .logo {
+      font-size: 1.65rem;
+      font-weight: 900;
+      background: var(--grad-2);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-decoration: none;
+    }
+    nav a {
+      color: var(--text);
+      text-decoration: none;
+      margin: 0 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: color 0.2s;
+      font-size: 0.95rem;
+    }
+    nav a:hover { color: #ff007f; }
+    .cart-btn {
+      background: var(--grad-3);
+      border: none;
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 30px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(168, 85, 247, 0.35);
+    }
+
+    /* Hero */
+    .hero {
+      text-align: center;
+      padding: 50px 6% 30px;
+      background: radial-gradient(circle at top, #1e1b4b 0%, var(--bg) 72%);
+    }
+    .hero h1 { font-size: 2.8rem; margin-bottom: 10px; line-height: 1.2; }
+    .hero span {
+      background: var(--grad-1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero p { color: var(--muted); max-width: 640px; margin: 0 auto; font-size: 1.05rem; }
+
+    /* Categories */
+    .categories {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      padding: 20px 6%;
+    }
+    .cat-btn {
+      background: var(--card);
+      color: var(--text);
+      border: 1px solid #2d3748;
+      padding: 10px 22px;
+      border-radius: 25px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.25s;
+    }
+    .cat-btn.active, .cat-btn:hover {
+      background: var(--grad-2);
+      color: #090b10;
+      border-color: transparent;
+    }
+
+    /* Product Grid */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+      gap: 28px;
+      padding: 20px 6% 65px;
+    }
+    .card {
+      background: var(--card);
+      border-radius: 18px;
+      overflow: hidden;
+      border: 1px solid #1e293b;
+      transition: transform 0.25s, box-shadow 0.25s;
+      display: flex;
+      flex-direction: column;
+    }
+    .card:hover {
+      transform: translateY(-6px);
+      background: var(--card-hover);
+      box-shadow: 0 14px 34px rgba(236, 72, 153, 0.22);
+    }
+
+    /* Mockup Stage */
+    .mockup-stage {
+      position: relative;
+      width: 100%;
+      height: 290px;
+      overflow: hidden;
+      cursor: pointer;
+      background: #0d1017;
+    }
+    .mockup-stage img.base-photo {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+    .card:hover .mockup-stage img.base-photo {
+      transform: scale(1.04);
+    }
+    
+    .print-overlay {
+      position: absolute;
+      pointer-events: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      mix-blend-mode: multiply;
+      opacity: 0.88;
+      filter: contrast(110%);
+    }
+    .print-tshirts { top: 30%; left: 34%; width: 32%; height: 36%; }
+    .print-hoodies { top: 33%; left: 34%; width: 32%; height: 32%; }
+    .print-mugs    { top: 36%; left: 37%; width: 26%; height: 28%; transform: rotate(-3deg); mix-blend-mode: normal; opacity: 0.94; }
+    .print-posters { top: 14%; left: 22%; width: 56%; height: 72%; mix-blend-mode: normal; border: 2px solid rgba(255,255,255,0.15); border-radius: 4px; }
+
+    .deal-tag {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: var(--grad-1);
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 0.72rem;
+      font-weight: 800;
+      z-index: 3;
+    }
+    .zoom-hint {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      background: rgba(9, 11, 16, 0.85);
+      color: #38bdf8;
+      font-size: 0.75rem;
+      padding: 4px 10px;
+      border-radius: 20px;
+      border: 1px solid #334155;
+      z-index: 3;
+    }
+
+    .card-body {
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+    .card-cat { font-size: 0.74rem; text-transform: uppercase; color: #38bdf8; font-weight: 700; letter-spacing: 0.6px; }
+    .card-title { font-size: 1.18rem; margin: 4px 0 6px; font-weight: 700; }
+    .card-desc { font-size: 0.86rem; color: var(--muted); margin-bottom: 12px; flex: 1; }
+
+    .variant-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+      gap: 8px;
+    }
+    .variant-row label { font-size: 0.8rem; color: #cbd5e1; font-weight: 600; }
+    .variant-select {
+      background: #090b10;
+      color: #fff;
+      border: 1px solid #334155;
+      padding: 5px 10px;
+      border-radius: 6px;
+      font-size: 0.82rem;
+      cursor: pointer;
+    }
+
+    .price-row { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+    .price { font-size: 1.35rem; font-weight: 800; color: #4ade80; }
+    .old-price { text-decoration: line-through; color: var(--muted); font-size: 0.95rem; }
+
+    .btn-group { display: flex; gap: 8px; }
+    .add-btn, .buy-now-btn {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      border-radius: 10px;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 0.88rem;
+      transition: opacity 0.2s;
+    }
+    .add-btn { background: #1e293b; color: #fff; border: 1px solid #334155; }
+    .add-btn:hover { background: #2d3748; }
+    .buy-now-btn { background: var(--grad-1); color: #fff; }
+    .buy-now-btn:hover { opacity: 0.92; }
+
+    /* Product Detail & Mockup Modal */
+    .modal-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.85);
+      z-index: 300;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+    .modal-backdrop.show { display: flex; }
+    .product-modal {
+      background: var(--card);
+      max-width: 780px;
+      width: 100%;
+      border-radius: 18px;
+      border: 1px solid #334155;
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+    @media (max-width: 680px) {
+      .product-modal { grid-template-columns: 1fr; max-height: 90vh; overflow-y: auto; }
+    }
+    .modal-mockup { position: relative; min-height: 320px; background: #090b10; }
+    .modal-mockup img.base-photo { width: 100%; height: 100%; object-fit: cover; }
+    .modal-info { padding: 26px; display: flex; flex-direction: column; justify-content: space-between; }
+    .modal-info h2 { font-size: 1.5rem; margin: 6px 0 10px; }
+    .modal-specs { list-style: none; margin: 12px 0 18px; font-size: 0.88rem; color: #cbd5e1; }
+    .modal-specs li { margin-bottom: 6px; padding-left: 16px; position: relative; }
+    .modal-specs li::before { content: "✦"; position: absolute; left: 0; color: #38bdf8; }
+
+    /* Cart Drawer & Checkout */
+    .drawer {
+      position: fixed;
+      top: 0; right: -450px;
+      width: 410px; max-width: 96vw; height: 100vh;
+      background: #111522;
+      border-left: 1px solid #2d3748;
+      padding: 22px;
+      transition: right 0.3s ease;
+      z-index: 400;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+    }
+    .drawer.open { right: 0; }
+    .drawer-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+    .cart-items { max-height: 170px; overflow-y: auto; margin-bottom: 10px; border-bottom: 1px solid #1e293b; padding-bottom: 8px; }
+    .cart-item {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 7px 0; border-bottom: 1px solid #1e293b; font-size: 0.86rem;
+    }
+    .total-box { font-size: 1.15rem; font-weight: 800; margin: 8px 0 12px; display: flex; justify-content: space-between; }
+
+    .shipping-form { background: #151926; padding: 12px; border-radius: 10px; border: 1px solid #2d3748; margin-bottom: 14px; }
+    .shipping-form h4 { font-size: 0.88rem; color: #38bdf8; margin-bottom: 8px; }
+    .shipping-form input {
+      width: 100%; background: #090b10; border: 1px solid #334155; color: #fff;
+      padding: 8px 10px; border-radius: 6px; margin-bottom: 7px; font-size: 0.84rem;
+    }
+    .shipping-form input:focus { outline: none; border-color: #38bdf8; }
+
+    .payment-box {
+      background: #f8fafc;
+      padding: 12px;
+      border-radius: 10px;
+      margin-top: 4px;
+    }
+    .payment-box-title {
+      color: #0f172a;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    footer {
+      background: #06080c;
+      padding: 35px 6%;
+      text-align: center;
+      border-top: 1px solid #1e293b;
+      color: var(--muted);
+    }
+    .footer-links { margin-bottom: 14px; }
+    .footer-links a {
+      color: #38bdf8; margin: 0 12px; text-decoration: none; font-weight: 600;
+    }
+    .footer-links a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+
+  <div class="bf-banner">
+    <span class="bf-badge">BLACK FRIDAY</span>
+    UP TO 40% OFF ALL CUSTOM PRINT-ON-DEMAND MERCH — LIMITED TIME!
+  </div>
+
+  <header>
+    <a href="index.html" class="logo">PrismDrop POD</a>
+    <nav>
+      <a href="index.html">Shop</a>
+      <a onclick="filterProducts('black-friday')">Black Friday Deals</a>
+      <a href="about.html">About Us</a>
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="payment.html">Payment Policy</a>
+    </nav>
+    <button class="cart-btn" onclick="toggleCart()">Cart (<span id="cart-count">0</span>)</button>
+  </header>
+
+  <section class="hero">
+    <h1>Wear &amp; Hang <span>Original Art</span></h1>
+    <p>Explore exclusive graphic designs printed on demand across premium T-Shirts, Heavyweight Hoodies, Color-Accent Mugs, and Rolled Wall Art Posters.</p>
+  </section>
+
+  <div class="categories">
+    <button class="cat-btn active" onclick="filterProducts('all', this)">All Products</button>
+    <button class="cat-btn" onclick="filterProducts('tshirts', this)">T-Shirts</button>
+    <button class="cat-btn" onclick="filterProducts('hoodies', this)">Hoodies</button>
+    <button class="cat-btn" onclick="filterProducts('mugs', this)">Accent Mugs</button>
+    <button class="cat-btn" onclick="filterProducts('posters', this)">Rolled Posters</button>
+    <button class="cat-btn" onclick="filterProducts('black-friday', this)">🔥 Black Friday Deals</button>
+  </div>
+
+  <main class="grid" id="product-grid"></main>
+
+  <!-- Product Mockup & Description Modal -->
+  <div class="modal-backdrop" id="product-modal" onclick="closeModal(event)">
+    <div class="product-modal" onclick="event.stopPropagation()">
+      <div class="modal-mockup" id="modal-mockup-stage"></div>
+      <div class="modal-info">
+        <div>
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <span class="card-cat" id="modal-cat"></span>
+            <button onclick="document.getElementById('product-modal').classList.remove('show')" style="background:none;border:none;color:#94a3b8;font-size:1.5rem;cursor:pointer;">&times;</button>
+          </div>
+          <h2 id="modal-title"></h2>
+          <p class="card-desc" id="modal-desc"></p>
+          <ul class="modal-specs" id="modal-specs"></ul>
+          <div class="variant-row">
+            <label for="modal-variant">Select Option:</label>
+            <select id="modal-variant" class="variant-select"></select>
+          </div>
+        </div>
+        <div>
+          <div class="price-row" id="modal-price-row"></div>
+          <div class="btn-group">
+            <button class="add-btn" id="modal-add-btn">Add to Cart</button>
+            <button class="buy-now-btn" id="modal-buy-btn">Buy Now</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide-out Cart, Shipping & Real-Time PayPal + Card Checkout Drawer -->
+  <aside class="drawer" id="cart-drawer">
+    <div class="drawer-header">
+      <h3>Checkout &amp; Cart</h3>
+      <button onclick="toggleCart()" style="background:none;border:none;color:#fff;font-size:1.4rem;cursor:pointer;">&times;</button>
+    </div>
+    
+    <div class="cart-items" id="cart-items"></div>
+    <div class="total-box">
+      <span>Total:</span>
+      <span id="cart-total">$0.00</span>
+    </div>
+
+    <div class="shipping-form">
+      <h4>📦 Shipping Details (For POD Fulfillment)</h4>
+      <input type="text" id="ship-name" placeholder="Full Name" required />
+      <input type="text" id="ship-address" placeholder="Street Address" required />
+      <input type="text" id="ship-city" placeholder="City &amp; State/Province" required />
+      <input type="text" id="ship-country" placeholder="Country" required />
+      <input type="text" id="ship-zip" placeholder="Postal / Zip Code" required />
+    </div>
+
+    <div class="payment-box">
+      <div class="payment-box-title">Express Checkout — PayPal or Card</div>
+      <div id="paypal-button-container"></div>
+    </div>
+    <div id="payment-status" style="margin-top:10px; color:#4ade80; font-weight:600; font-size:0.85rem;"></div>
+  </aside>
+
+  <footer>
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="about.html">About Us</a>
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="payment.html">Payment Policy</a>
+    </div>
+    <p>&copy; 2026 PrismDrop POD Studio. All Rights Reserved.</p>
+  </footer>
+
+  <script src="https://www.paypal.com/sdk/js?client-id=sb&currency=USD&enable-funding=card"></script>
+
+  <script>
+    const artworks = {
+      cyberSun: `<svg viewBox="0 0 200 200" width="100%" height="100%">
+        <defs><linearGradient id="g1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#ff007f"/><stop offset="100%" stop-color="#00f2fe"/></linearGradient></defs>
+        <circle cx="100" cy="85" r="55" fill="url(#g1)"/>
+        <rect x="35" y="95" width="130" height="6" fill="#090b10"/>
+        <rect x="35" y="110" width="130" height="8" fill="#090b10"/>
+        <polygon points="30,145 80,85 120,125 145,95 175,145" fill="#1e1b4b" stroke="#00f2fe" stroke-width="3"/>
+        <text x="100" y="172" text-anchor="middle" fill="#111" font-family="sans-serif" font-weight="900" font-size="16" letter-spacing="3">NEO TOKYO</text>
+      </svg>`,
+      astronaut: `<svg viewBox="0 0 200 200" width="100%" height="100%">
+        <circle cx="100" cy="100" r="68" fill="none" stroke="#a855f7" stroke-width="5" stroke-dasharray="14 6"/>
+        <circle cx="100" cy="92" r="36" fill="#f8fafc"/>
+        <rect x="76" y="76" width="48" height="28" rx="14" fill="#00f2fe"/>
+        <path d="M62 145 Q100 120 138 145" stroke="#ff7b00" stroke-width="8" fill="none" stroke-linecap="round"/>
+        <text x="100" y="176" text-anchor="middle" fill="#ff007f" font-family="sans-serif" font-weight="900" font-size="14" letter-spacing="2">ZERO GRAVITY</text>
+      </svg>`,
+      vaporGrid: `<svg viewBox="0 0 200 200" width="100%" height="100%">
+        <rect x="25" y="25" width="150" height="150" rx="14" fill="none" stroke="#ff007f" stroke-width="5"/>
+        <polygon points="100,42 152,135 48,135" fill="none" stroke="#00f2fe" stroke-width="5"/>
+        <circle cx="100" cy="102" r="22" fill="#ff7b00"/>
+        <text x="100" y="162" text-anchor="middle" fill="#111" font-family="sans-serif" font-weight="800" font-size="13" letter-spacing="2">PRISM WAVE</text>
+      </svg>`,
+      pixelCat: `<svg viewBox="0 0 200 200" width="100%" height="100%">
+        <polygon points="55,60 70,30 88,55 112,55 130,30 145,60 150,125 100,148 50,125" fill="#ec4899"/>
+        <rect x="68" y="82" width="24" height="12" fill="#00f2fe"/>
+        <rect x="108" y="82" width="24" height="12" fill="#00f2fe"/>
+        <polygon points="94,104 106,104 100,114" fill="#fff"/>
+        <text x="100" y="174" text-anchor="middle" fill="#111" font-family="monospace" font-weight="900" font-size="15">CYBER PAWS</text>
+      </svg>`,
+      mugArt1: `<svg viewBox="0 0 220 160" width="100%" height="100%">
+        <defs>
+          <linearGradient id="mugGrad1" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#ff007f"/><stop offset="50%" stop-color="#7928ca"/><stop offset="100%" stop-color="#00f2fe"/>
+          </linearGradient>
+        </defs>
+        <rect x="10" y="15" width="200" height="130" rx="16" fill="url(#mugGrad1)" opacity="0.95"/>
+        <circle cx="60" cy="80" r="28" fill="#ff7b00" opacity="0.85"/>
+        <circle cx="160" cy="80" r="24" fill="#00f2fe" opacity="0.85"/>
+        <text x="110" y="87" text-anchor="middle" fill="#ffffff" font-family="sans-serif" font-weight="900" font-size="20" letter-spacing="4">COSMIC BREW</text>
+      </svg>`,
+      mugArt2: `<svg viewBox="0 0 220 160" width="100%" height="100%">
+        <defs>
+          <linearGradient id="mugGrad2" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#00f2fe"/><stop offset="50%" stop-color="#4facfe"/><stop offset="100%" stop-color="#ff007f"/>
+          </linearGradient>
+        </defs>
+        <rect x="10" y="15" width="200" height="130" rx="16" fill="url(#mugGrad2)" opacity="0.95"/>
+        <polygon points="110,35 135,85 85,85" fill="#fde047"/>
+        <text x="110" y="118" text-anchor="middle" fill="#090b10" font-family="sans-serif" font-weight="900" font-size="18" letter-spacing="3">NEON VIBES</text>
+      </svg>`
+    };
+
+    const catalog = [
+      {
+        id: 'tee-1',
+        name: 'Neo Tokyo Sunset Graphic Tee',
+        category: 'tshirts',
+        bf: true,
+        price: 24.99,
+        oldPrice: 36.00,
+        img: 'https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?auto=format&fit=crop&w=1200&q=95',
+        art: artworks.cyberSun,
+        desc: '100% combed ring-spun organic cotton tee featuring a vivid retro-futuristic Tokyo skyline DTG print.',
+        specs: ['180 GSM breathable heavyweight cotton', 'Fade-resistant direct-to-garment (DTG) eco-ink', 'Pre-shrunk unisex athletic fit'],
+        variants: ['Size: S', 'Size: M', 'Size: L', 'Size: XL', 'Size: 2XL']
+      },
+      {
+        id: 'tee-2',
+        name: 'Zero Gravity Astronaut Tee',
+        category: 'tshirts',
+        bf: false,
+        price: 23.99,
+        oldPrice: null,
+        img: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=1200&q=95',
+        art: artworks.astronaut,
+        desc: 'Crisp studio white cotton tee showcasing a floating neon astronaut emblem with ultra-sharp line detail.',
+        specs: ['100% ring-spun cotton jersey', 'Double-stitched collar and sleeves', 'Soft-touch breathable ink finish'],
+        variants: ['Size: S', 'Size: M', 'Size: L', 'Size: XL']
+      },
+      {
+        id: 'tee-3',
+        name: 'Cyber Paws Synthwave Tee',
+        category: 'tshirts',
+        bf: true,
+        price: 25.99,
+        oldPrice: 35.00,
+        img: 'https://images.unsplash.com/photo-1576566588028-4147f3842f27?auto=format&fit=crop&w=1200&q=95',
+        art: artworks.pixelCat,
+        desc: 'Playful cyberpunk feline artwork printed in high-saturation magenta and cyan inks on soft premium cotton.',
+        specs: ['Tear-away neck label for comfort', 'Vibrant high-opacity ink print', 'Machine wash cold inside-out'],
+        variants: ['Size: S', 'Size: M', 'Size: L', 'Size: XL', 'Size: 2XL']
+      },
+      {
+        id: 'hoodie-1',
+        name: 'Prism Wave Heavyweight Hoodie',
+        category: 'hoodies',
+        bf: true,
+        price: 44.99,
+        oldPrice: 65.00,
+        img: 'https://images.unsplash.com/photo-1556905055-8f358a7a47b2?auto=format&fit=crop&w=1200&q=95',
+        art: artworks.vaporGrid,
+        desc: 'Ultra-cozy 320 GSM fleece pullover hoodie featuring a luminous geometric synthwave triangle centerpiece.',
+        specs: ['80% ring-spun cotton / 20% poly fleece', 'Double-lined hood with matching drawstrings', 'Front kangaroo pouch pocket'],
+        variants: ['Size: S', 'Size: M', 'Size: L', 'Size: XL', 'Size: 2XL']
+      },
+      {
+        id: 'hoodie-2',
+        name: 'Neo Tokyo Midnight Fleece Hoodie',
+        category: 'hoodies',
+        bf: false,
+        price: 47.99,
+        oldPrice: null,
+        img: 'https://images.unsplash.com/photo-1509967419530-da38b4704bc6?auto=format&fit=crop&w=1200&q=95',
+        art: artworks.cyberSun,
+        desc: 'Streetwear-inspired heavyweight hoodie crafted for chilly nights with a bold cyberpunk horizon graphic.',
+        specs: ['Plush brushed interior lining', 'Ribbed cuffs and waistband', 'Crack-resistant high-definition print'],
+        variants: ['Size: M', 'Size: L', 'Size: XL', 'Size: 2XL']
+      },
+      {
+        id: 'mug-1',
+        name: 'Zero Gravity Color-Accent Mug',
+        category: 'mugs',
+        bf: false,
+        price: 14.99,
+        oldPrice: null,
+        img: 'https://images.unsplash.com/photo-1514228742587-6b1558fcca3d?auto=format&fit=crop&w=1200&q=95',
+        art: artworks.mugArt1,
+        desc: 'Glossy white ceramic mug featuring a stunning multi-color wrap-around Cosmic Brew design and vibrant accent handle.',
+        specs: ['ORCA-coated sublimation ceramic', '100% dishwasher and microwave safe', 'C-shaped ergonomic colored handle'],
+        variants: ['11oz (Cyan Accent)', '15oz (Pink Accent)', '11oz (Black Accent)']
+      },
+      {
+        id: 'mug-2',
+        name: 'Cyber Paws Neon Coffee Mug',
+        category: 'mugs',
+        bf: true,
+        price: 13.99,
+        oldPrice: 19.99,
+        img: 'https://images.unsplash.com/photo-1577803645773-f96470509666?auto=format&fit=crop&w=1200&q=95',
+        art: artworks.mugArt2,
+        desc: 'Start your coding or gaming session with this glossy accent ceramic mug wrapped in vibrant Neon Vibes graphics.',
+        specs: ['Lead & BPA-free glossy ceramic', 'Wrap-around high-gloss colorful print', 'Shipped in crush-proof foam box'],
+        variants: ['11oz Standard', '15oz Large']
+      },
+      {
+        id: 'poster-1',
+        name: 'Neo Tokyo Rolled Matte Poster',
+        category: 'posters',
+        bf: true,
+        price: 19.99,
+        oldPrice: 29.00,
+        img: 'https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?auto=format&fit=crop&w=1200&q=95',
+        art: artworks.cyberSun,
+        desc: 'Museum-grade archival rolled matte poster shipped in a protective heavy-duty Kraft tube.',
+        specs: ['200 GSM museum-grade archival matte paper', '12-color giclée pigment inks', 'Shipped rolled securely in a hard cardboard tube'],
+        variants: ['12" × 18" Rolled', '18" × 24" Rolled', '24" × 36" Rolled']
+      },
+      {
+        id: 'poster-2',
+        name: 'Prism Wave Rolled Art Print',
+        category: 'posters',
+        bf: false,
+        price: 22.99,
+        oldPrice: null,
+        img: 'https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=1200&q=95',
+        art: artworks.vaporGrid,
+        desc: 'Minimalist geometric synthwave rolled print produced on thick archival paper with deep blacks and glowing neon tones.',
+        specs: ['FSC-certified heavy art paper', 'Fade-resistant for 100+ years indoors', 'Shipped rolled in a protective Kraft mailing tube'],
+        variants: ['12" × 18" Rolled', '18" × 24" Rolled', '24" × 36" Rolled']
+      }
+    ];
+
+    let cart = [];
+
+    function renderProducts(items) {
+      const grid = document.getElementById('product-grid');
+      grid.innerHTML = items.map(p => `
+        <div class="card">
+          <div class="mockup-stage" onclick="openProductModal('${p.id}')">
+            ${p.bf ? '<div class="deal-tag">BLACK FRIDAY DEAL</div>' : ''}
+            <img class="base-photo" src="${p.img}" alt="${p.name}">
+            <div class="print-overlay print-${p.category}">${p.art}</div>
+            <span class="zoom-hint">🔍 View Design</span>
+          </div>
+          <div class="card-body">
+            <div class="card-cat">${p.category}</div>
+            <h3 class="card-title">${p.name}</h3>
+            <p class="card-desc">${p.desc}</p>
+            <div class="variant-row">
+              <label for="var-${p.id}">Option:</label>
+              <select id="var-${p.id}" class="variant-select">
+                ${p.variants.map(v => `<option value="${v}">${v}</option>`).join('')}
+              </select>
+            </div>
+            <div class="price-row">
+              <span class="price">$${p.price.toFixed(2)}</span>
+              ${p.oldPrice ? `<span class="old-price">$${p.oldPrice.toFixed(2)}</span>` : ''}
+            </div>
+            <div class="btn-group">
+              <button class="add-btn" onclick="addToCart('${p.id}')">Add to Cart</button>
+              <button class="buy-now-btn" onclick="buyNow('${p.id}')">Buy Now</button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function openProductModal(id) {
+      const p = catalog.find(item => item.id === id);
+      if (!p) return;
+
+      document.getElementById('modal-mockup-stage').innerHTML = `
+        ${p.bf ? '<div class="deal-tag">BLACK FRIDAY DEAL</div>' : ''}
+        <img class="base-photo" src="${p.img}" alt="${p.name}">
+        <div class="print-overlay print-${p.category}">${p.art}</div>
+      `;
+      document.getElementById('modal-cat').innerText = p.category;
+      document.getElementById('modal-title').innerText = p.name;
+      document.getElementById('modal-desc').innerText = p.desc;
+      document.getElementById('modal-specs').innerHTML = p.specs.map(s => `<li>${s}</li>`).join('');
+      
+      const select = document.getElementById('modal-variant');
+      select.innerHTML = p.variants.map(v => `<option value="${v}">${v}</option>`).join('');
+
+      document.getElementById('modal-price-row').innerHTML = `
+        <span class="price">$${p.price.toFixed(2)}</span>
+        ${p.oldPrice ? `<span class="old-price">$${p.oldPrice.toFixed(2)}</span>` : ''}
+      `;
+
+      document.getElementById('modal-add-btn').onclick = () => {
+        addToCart(p.id, select.value);
+        document.getElementById('product-modal').classList.remove('show');
+      };
+      document.getElementById('modal-buy-btn').onclick = () => {
+        buyNow(p.id, select.value);
+        document.getElementById('product-modal').classList.remove('show');
+      };
+
+      document.getElementById('product-modal').classList.add('show');
+    }
+
+    function closeModal(e) {
+      if (e.target.id === 'product-modal') e.target.classList.remove('show');
+    }
+
+    function filterProducts(filter, btn) {
+      if (btn) {
+        document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+      }
+      if (filter === 'all') return renderProducts(catalog);
+      if (filter === 'black-friday') return renderProducts(catalog.filter(p => p.bf));
+      renderProducts(catalog.filter(p => p.category === filter));
+    }
+
+    function addToCart(id, chosenVariant) {
+      const variant = chosenVariant || document.getElementById(`var-${id}`).value;
+      const key = `${id}__${variant}`;
+      const existing = cart.find(i => i.key === key);
+      if (existing) existing.qty++;
+      else cart.push({ key, id, variant, qty: 1 });
+      updateCartUI();
+      document.getElementById('cart-drawer').classList.add('open');
+    }
+
+    function buyNow(id, chosenVariant) {
+      addToCart(id, chosenVariant);
+      document.getElementById('ship-name').focus();
+    }
+
+    function updateCartUI() {
+      const container = document.getElementById('cart-items');
+      let total = 0, count = 0;
+
+      if (cart.length === 0) {
+        container.innerHTML = '<p style="color:#94a3b8; font-size:0.85rem; padding:10px 0;">Your cart is empty. Add a product to checkout.</p>';
+      } else {
+        container.innerHTML = cart.map(item => {
+          const prod = catalog.find(p => p.id === item.id);
+          total += prod.price * item.qty;
+          count += item.qty;
+          return `
+            <div class="cart-item">
+              <div>
+                <strong>${prod.name}</strong> <span style="color:#38bdf8;">(${item.variant})</span><br>
+                <small>$${prod.price.toFixed(2)} &times; ${item.qty}</small>
+              </div>
+              <button onclick="removeItem('${item.key}')" style="background:none;border:none;color:#ef4444;cursor:pointer;">Remove</button>
+            </div>
+          `;
+        }).join('');
+      }
+
+      document.getElementById('cart-count').innerText = count;
+      document.getElementById('cart-total').innerText = `$${total.toFixed(2)}`;
+    }
+
+    function removeItem(key) {
+      cart = cart.filter(i => i.key !== key);
+      updateCartUI();
+    }
+
+    function toggleCart() {
+      document.getElementById('cart-drawer').classList.toggle('open');
+    }
+
+    function mountPayPalButtons() {
+      const container = document.getElementById('paypal-button-container');
+
+      if (!window.paypal) {
+        container.innerHTML = `
+          <div style="background:#fee2e2; color:#991b1b; padding:10px; border-radius:6px; font-size:0.8rem; font-weight:600;">
+            ⚠️ Payment buttons could not load. Please check your internet connection or verify your PayPal Client ID.
+          </div>`;
+        return;
+      }
+
+      paypal.Buttons({
+        style: {
+          layout: 'vertical',
+          color: 'gold',
+          shape: 'rect',
+          label: 'paypal'
+        },
+        createOrder: (data, actions) => {
+          if (cart.length === 0) {
+            alert('Your cart is empty! Please add a product first.');
+            return;
+          }
+
+          const name = document.getElementById('ship-name').value.trim();
+          const address = document.getElementById('ship-address').value.trim();
+          const city = document.getElementById('ship-city').value.trim();
+          const country = document.getElementById('ship-country').value.trim();
+          const zip = document.getElementById('ship-zip').value.trim();
+
+          if (!name || !address || !city || !country || !zip) {
+            alert('Please fill out all shipping details before paying!');
+            return;
+          }
+
+          let total = 0;
+          const itemNames = [];
+
+          cart.forEach(item => {
+            const prod = catalog.find(p => p.id === item.id);
+            total += prod.price * item.qty;
+            itemNames.push(`${prod.name} [${item.variant}] x${item.qty}`);
+          });
+
+          return actions.order.create({
+            purchase_units: [{
+              description: `Order: ${itemNames.join(', ')} | Ship: ${name}, ${address}, ${city}, ${country} ${zip}`.slice(0, 127),
+              amount: {
+                currency_code: 'USD',
+                value: total.toFixed(2)
+              }
+            }]
+          });
+        },
+        onApprove: (data, actions) => {
+          return actions.order.capture().then(details => {
+            document.getElementById('payment-status').style.color = '#4ade80';
+            document.getElementById('payment-status').innerText =
+              `✅ Payment successful! (Order ID: ${details.id}). Your custom POD design & shipping details are confirmed!`;
+            cart = [];
+            updateCartUI();
+          });
+        },
+        onError: (err) => {
+          console.error('PayPal/Card Checkout Error:', err);
+          document.getElementById('payment-status').style.color = '#f87171';
+          document.getElementById('payment-status').innerText =
+            '❌ Payment failed or cancelled. Please verify your card/PayPal details and try again.';
+        }
+      }).render('#paypal-button-container');
+    }
+
+    renderProducts(catalog);
+    updateCartUI();
+    mountPayPalButtons();
+  </script>
+</body>
+</html>
