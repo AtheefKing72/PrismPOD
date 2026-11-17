@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
   <title>PrismDrop POD | Custom Printed Tees, Hoodies, Mugs & Rolled Posters</title>
   <style>
     :root {
@@ -16,27 +16,28 @@
       --grad-3: linear-gradient(135deg, #a855f7, #ec4899);
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
-    body { background: var(--bg); color: var(--text); line-height: 1.6; }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; }
+    html, body { background: var(--bg); color: var(--text); line-height: 1.6; overflow-x: hidden; width: 100%; }
 
     /* Black Friday Banner */
     .bf-banner {
       background: var(--grad-1);
       color: #fff;
       text-align: center;
-      padding: 10px 15px;
+      padding: 8px 12px;
       font-weight: 700;
-      font-size: 0.92rem;
-      letter-spacing: 0.4px;
+      font-size: 0.85rem;
+      letter-spacing: 0.3px;
     }
     .bf-badge {
       background: #090b10;
       color: #ff7b00;
-      padding: 2px 8px;
+      padding: 2px 7px;
       border-radius: 4px;
-      margin-right: 8px;
-      font-size: 0.78rem;
+      margin-right: 6px;
+      font-size: 0.72rem;
       font-weight: 800;
+      display: inline-block;
     }
 
     /* Header */
@@ -44,76 +45,86 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 16px 6%;
-      background: rgba(9, 11, 16, 0.95);
+      padding: 14px 5%;
+      background: rgba(9, 11, 16, 0.96);
       backdrop-filter: blur(10px);
       position: sticky;
       top: 0;
       z-index: 100;
       border-bottom: 1px solid #1e293b;
-      flex-wrap: wrap;
-      gap: 12px;
+      gap: 10px;
     }
     .logo {
-      font-size: 1.65rem;
+      font-size: 1.5rem;
       font-weight: 900;
       background: var(--grad-2);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       text-decoration: none;
+      white-space: nowrap;
+    }
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 16px;
     }
     nav a {
       color: var(--text);
       text-decoration: none;
-      margin: 0 12px;
       font-weight: 600;
       cursor: pointer;
       transition: color 0.2s;
-      font-size: 0.95rem;
+      font-size: 0.92rem;
+      white-space: nowrap;
     }
     nav a:hover { color: #ff007f; }
     .cart-btn {
       background: var(--grad-3);
       border: none;
       color: #fff;
-      padding: 10px 20px;
+      padding: 9px 18px;
       border-radius: 30px;
       font-weight: 700;
+      font-size: 0.9rem;
       cursor: pointer;
       box-shadow: 0 4px 15px rgba(168, 85, 247, 0.35);
+      white-space: nowrap;
+      flex-shrink: 0;
     }
 
     /* Hero */
     .hero {
       text-align: center;
-      padding: 50px 6% 30px;
+      padding: 40px 5% 24px;
       background: radial-gradient(circle at top, #1e1b4b 0%, var(--bg) 72%);
     }
-    .hero h1 { font-size: 2.8rem; margin-bottom: 10px; line-height: 1.2; }
+    .hero h1 { font-size: clamp(1.9rem, 5vw, 2.8rem); margin-bottom: 10px; line-height: 1.2; }
     .hero span {
       background: var(--grad-1);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
-    .hero p { color: var(--muted); max-width: 640px; margin: 0 auto; font-size: 1.05rem; }
+    .hero p { color: var(--muted); max-width: 640px; margin: 0 auto; font-size: 0.98rem; }
 
     /* Categories */
     .categories {
       display: flex;
       justify-content: center;
       flex-wrap: wrap;
-      gap: 12px;
-      padding: 20px 6%;
+      gap: 10px;
+      padding: 16px 5%;
     }
     .cat-btn {
       background: var(--card);
       color: var(--text);
       border: 1px solid #2d3748;
-      padding: 10px 22px;
+      padding: 9px 18px;
       border-radius: 25px;
       cursor: pointer;
       font-weight: 600;
+      font-size: 0.88rem;
       transition: all 0.25s;
+      white-space: nowrap;
     }
     .cat-btn.active, .cat-btn:hover {
       background: var(--grad-2);
@@ -124,9 +135,9 @@
     /* Product Grid */
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
-      gap: 28px;
-      padding: 20px 6% 65px;
+      grid-template-columns: repeat(auto-fit, minmax(275px, 1fr));
+      gap: 24px;
+      padding: 16px 5% 60px;
     }
     .card {
       background: var(--card);
@@ -138,7 +149,7 @@
       flex-direction: column;
     }
     .card:hover {
-      transform: translateY(-6px);
+      transform: translateY(-5px);
       background: var(--card-hover);
       box-shadow: 0 14px 34px rgba(236, 72, 153, 0.22);
     }
@@ -147,7 +158,7 @@
     .mockup-stage {
       position: relative;
       width: 100%;
-      height: 290px;
+      height: 270px;
       overflow: hidden;
       cursor: pointer;
       background: #0d1017;
@@ -184,7 +195,7 @@
       background: var(--grad-1);
       padding: 4px 10px;
       border-radius: 6px;
-      font-size: 0.72rem;
+      font-size: 0.7rem;
       font-weight: 800;
       z-index: 3;
     }
@@ -192,9 +203,9 @@
       position: absolute;
       bottom: 10px;
       right: 10px;
-      background: rgba(9, 11, 16, 0.85);
+      background: rgba(9, 11, 16, 0.88);
       color: #38bdf8;
-      font-size: 0.75rem;
+      font-size: 0.74rem;
       padding: 4px 10px;
       border-radius: 20px;
       border: 1px solid #334155;
@@ -202,14 +213,14 @@
     }
 
     .card-body {
-      padding: 18px;
+      padding: 16px;
       display: flex;
       flex-direction: column;
       flex: 1;
     }
-    .card-cat { font-size: 0.74rem; text-transform: uppercase; color: #38bdf8; font-weight: 700; letter-spacing: 0.6px; }
-    .card-title { font-size: 1.18rem; margin: 4px 0 6px; font-weight: 700; }
-    .card-desc { font-size: 0.86rem; color: var(--muted); margin-bottom: 12px; flex: 1; }
+    .card-cat { font-size: 0.72rem; text-transform: uppercase; color: #38bdf8; font-weight: 700; letter-spacing: 0.6px; }
+    .card-title { font-size: 1.12rem; margin: 4px 0 6px; font-weight: 700; }
+    .card-desc { font-size: 0.85rem; color: var(--muted); margin-bottom: 12px; flex: 1; }
 
     .variant-row {
       display: flex;
@@ -218,31 +229,33 @@
       margin-bottom: 12px;
       gap: 8px;
     }
-    .variant-row label { font-size: 0.8rem; color: #cbd5e1; font-weight: 600; }
+    .variant-row label { font-size: 0.82rem; color: #cbd5e1; font-weight: 600; }
     .variant-select {
       background: #090b10;
       color: #fff;
       border: 1px solid #334155;
-      padding: 5px 10px;
-      border-radius: 6px;
-      font-size: 0.82rem;
+      padding: 7px 10px;
+      border-radius: 8px;
+      font-size: 0.88rem;
       cursor: pointer;
+      min-height: 36px;
     }
 
     .price-row { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
-    .price { font-size: 1.35rem; font-weight: 800; color: #4ade80; }
-    .old-price { text-decoration: line-through; color: var(--muted); font-size: 0.95rem; }
+    .price { font-size: 1.3rem; font-weight: 800; color: #4ade80; }
+    .old-price { text-decoration: line-through; color: var(--muted); font-size: 0.92rem; }
 
     .btn-group { display: flex; gap: 8px; }
     .add-btn, .buy-now-btn {
       flex: 1;
-      padding: 10px;
+      padding: 11px 10px;
       border: none;
       border-radius: 10px;
       font-weight: 700;
       cursor: pointer;
       font-size: 0.88rem;
       transition: opacity 0.2s;
+      min-height: 42px;
     }
     .add-btn { background: #1e293b; color: #fff; border: 1px solid #334155; }
     .add-btn:hover { background: #2d3748; }
@@ -254,11 +267,11 @@
       display: none;
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.85);
+      background: rgba(0, 0, 0, 0.88);
       z-index: 300;
       justify-content: center;
       align-items: center;
-      padding: 20px;
+      padding: 14px;
     }
     .modal-backdrop.show { display: flex; }
     .product-modal {
@@ -271,45 +284,57 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
     }
-    @media (max-width: 680px) {
-      .product-modal { grid-template-columns: 1fr; max-height: 90vh; overflow-y: auto; }
-    }
-    .modal-mockup { position: relative; min-height: 320px; background: #090b10; }
+    .modal-mockup { position: relative; min-height: 300px; background: #090b10; }
     .modal-mockup img.base-photo { width: 100%; height: 100%; object-fit: cover; }
-    .modal-info { padding: 26px; display: flex; flex-direction: column; justify-content: space-between; }
-    .modal-info h2 { font-size: 1.5rem; margin: 6px 0 10px; }
-    .modal-specs { list-style: none; margin: 12px 0 18px; font-size: 0.88rem; color: #cbd5e1; }
+    .modal-info { padding: 22px; display: flex; flex-direction: column; justify-content: space-between; }
+    .modal-info h2 { font-size: 1.4rem; margin: 6px 0 10px; }
+    .modal-specs { list-style: none; margin: 10px 0 16px; font-size: 0.86rem; color: #cbd5e1; }
     .modal-specs li { margin-bottom: 6px; padding-left: 16px; position: relative; }
     .modal-specs li::before { content: "✦"; position: absolute; left: 0; color: #38bdf8; }
 
     /* Cart Drawer & Checkout */
     .drawer {
       position: fixed;
-      top: 0; right: -450px;
-      width: 410px; max-width: 96vw; height: 100vh;
+      top: 0; right: -100%;
+      width: 410px; max-width: 100vw; height: 100dvh;
       background: #111522;
       border-left: 1px solid #2d3748;
-      padding: 22px;
+      padding: 20px;
       transition: right 0.3s ease;
       z-index: 400;
       display: flex;
       flex-direction: column;
       overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
     }
     .drawer.open { right: 0; }
     .drawer-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+    .close-drawer-btn {
+      background: #1e293b;
+      border: 1px solid #334155;
+      color: #fff;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      font-size: 1.3rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
     .cart-items { max-height: 170px; overflow-y: auto; margin-bottom: 10px; border-bottom: 1px solid #1e293b; padding-bottom: 8px; }
     .cart-item {
       display: flex; justify-content: space-between; align-items: center;
-      padding: 7px 0; border-bottom: 1px solid #1e293b; font-size: 0.86rem;
+      padding: 8px 0; border-bottom: 1px solid #1e293b; font-size: 0.86rem; gap: 8px;
     }
     .total-box { font-size: 1.15rem; font-weight: 800; margin: 8px 0 12px; display: flex; justify-content: space-between; }
 
     .shipping-form { background: #151926; padding: 12px; border-radius: 10px; border: 1px solid #2d3748; margin-bottom: 14px; }
     .shipping-form h4 { font-size: 0.88rem; color: #38bdf8; margin-bottom: 8px; }
+    /* 16px font-size prevents automatic zoom-in on iOS Safari when tapping inputs */
     .shipping-form input {
       width: 100%; background: #090b10; border: 1px solid #334155; color: #fff;
-      padding: 8px 10px; border-radius: 6px; margin-bottom: 7px; font-size: 0.84rem;
+      padding: 10px 12px; border-radius: 8px; margin-bottom: 8px; font-size: 16px;
     }
     .shipping-form input:focus { outline: none; border-color: #38bdf8; }
 
@@ -318,10 +343,11 @@
       padding: 12px;
       border-radius: 10px;
       margin-top: 4px;
+      margin-bottom: 24px;
     }
     .payment-box-title {
       color: #0f172a;
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       font-weight: 700;
       text-align: center;
       margin-bottom: 8px;
@@ -331,33 +357,101 @@
 
     footer {
       background: #06080c;
-      padding: 35px 6%;
+      padding: 30px 5%;
       text-align: center;
       border-top: 1px solid #1e293b;
       color: var(--muted);
     }
-    .footer-links { margin-bottom: 14px; }
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
     .footer-links a {
-      color: #38bdf8; margin: 0 12px; text-decoration: none; font-weight: 600;
+      color: #38bdf8; text-decoration: none; font-weight: 600; font-size: 0.92rem;
     }
     .footer-links a:hover { text-decoration: underline; }
+
+    /* Mobile & Tablet Breakpoints */
+    @media (max-width: 768px) {
+      header {
+        flex-wrap: wrap;
+        padding: 12px 4%;
+      }
+      .logo {
+        font-size: 1.35rem;
+        order: 1;
+      }
+      .cart-btn {
+        order: 2;
+        padding: 8px 15px;
+        font-size: 0.85rem;
+      }
+      nav {
+        order: 3;
+        width: 100%;
+        overflow-x: auto;
+        padding-top: 8px;
+        border-top: 1px solid #1e293b;
+        gap: 14px;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+      }
+      nav::-webkit-scrollbar { display: none; }
+      nav a { font-size: 0.86rem; }
+
+      .categories {
+        justify-content: flex-start;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        padding: 14px 4%;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+      }
+      .categories::-webkit-scrollbar { display: none; }
+
+      .grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        padding: 12px 4% 50px;
+      }
+      .mockup-stage { height: 250px; }
+
+      .product-modal {
+        grid-template-columns: 1fr;
+        max-height: 90dvh;
+        overflow-y: auto;
+      }
+      .modal-mockup { min-height: 240px; }
+      .modal-info { padding: 18px; }
+      .modal-info h2 { font-size: 1.25rem; }
+
+      .drawer {
+        width: 100vw;
+        border-left: none;
+        padding: 18px 16px;
+      }
+    }
   </style>
 </head>
 <body>
 
   <div class="bf-banner">
     <span class="bf-badge">BLACK FRIDAY</span>
-    UP TO 40% OFF ALL CUSTOM PRINT-ON-DEMAND MERCH — LIMITED TIME!
+    UP TO 40% OFF ALL CUSTOM MERCH — LIMITED TIME!
   </div>
 
   <header>
     <a href="index.html" class="logo">PrismDrop POD</a>
     <nav>
       <a href="index.html">Shop</a>
-      <a onclick="filterProducts('black-friday')">Black Friday Deals</a>
+      <a href="collection.html">Drop 02 (New)</a>
+      <a onclick="filterProducts('black-friday')">🔥 Deals</a>
       <a href="about.html">About Us</a>
-      <a href="privacy.html">Privacy Policy</a>
-      <a href="payment.html">Payment Policy</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="payment.html">Payment</a>
     </nav>
     <button class="cart-btn" onclick="toggleCart()">Cart (<span id="cart-count">0</span>)</button>
   </header>
@@ -373,7 +467,7 @@
     <button class="cat-btn" onclick="filterProducts('hoodies', this)">Hoodies</button>
     <button class="cat-btn" onclick="filterProducts('mugs', this)">Accent Mugs</button>
     <button class="cat-btn" onclick="filterProducts('posters', this)">Rolled Posters</button>
-    <button class="cat-btn" onclick="filterProducts('black-friday', this)">🔥 Black Friday Deals</button>
+    <button class="cat-btn" onclick="filterProducts('black-friday', this)">🔥 Black Friday</button>
   </div>
 
   <main class="grid" id="product-grid"></main>
@@ -386,7 +480,7 @@
         <div>
           <div style="display:flex; justify-content:space-between; align-items:center;">
             <span class="card-cat" id="modal-cat"></span>
-            <button onclick="document.getElementById('product-modal').classList.remove('show')" style="background:none;border:none;color:#94a3b8;font-size:1.5rem;cursor:pointer;">&times;</button>
+            <button onclick="document.getElementById('product-modal').classList.remove('show')" style="background:none;border:none;color:#94a3b8;font-size:1.6rem;cursor:pointer;line-height:1;">&times;</button>
           </div>
           <h2 id="modal-title"></h2>
           <p class="card-desc" id="modal-desc"></p>
@@ -411,7 +505,7 @@
   <aside class="drawer" id="cart-drawer">
     <div class="drawer-header">
       <h3>Checkout &amp; Cart</h3>
-      <button onclick="toggleCart()" style="background:none;border:none;color:#fff;font-size:1.4rem;cursor:pointer;">&times;</button>
+      <button class="close-drawer-btn" onclick="toggleCart()" aria-label="Close Cart">&times;</button>
     </div>
     
     <div class="cart-items" id="cart-items"></div>
@@ -446,7 +540,7 @@
     <p>&copy; 2026 PrismDrop POD Studio. All Rights Reserved.</p>
   </footer>
 
-  <script src="https://www.paypal.com/sdk/js?client-id=BAAQnnBqqFcv6UFedRqZxhuc2vSTteXDmx_8OBX0YcOj9OjhX0NIPu-ibCZ8Brk7mD7gFsOwMKRo7bddzo&currency=USD&enable-funding=card"></script>
+  <script src="https://www.paypal.com/sdk/js?client-id=sb&currency=USD&enable-funding=card"></script>
 
   <script>
     const artworks = {
@@ -548,7 +642,7 @@
         bf: true,
         price: 44.99,
         oldPrice: 65.00,
-        img: 'https://images.unsplash.com/photo-1556905055-8f358a7a47b2?auto=format&fit=crop&w=1200&q=95',
+        img: 'https://images.unsplash.com/photo-1633956842402-ef1ed51b20e6?q=80&w=688&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D',
         art: artworks.vaporGrid,
         desc: 'Ultra-cozy 320 GSM fleece pullover hoodie featuring a luminous geometric synthwave triangle centerpiece.',
         specs: ['80% ring-spun cotton / 20% poly fleece', 'Double-lined hood with matching drawstrings', 'Front kangaroo pouch pocket'],
@@ -561,7 +655,7 @@
         bf: false,
         price: 47.99,
         oldPrice: null,
-        img: 'https://images.unsplash.com/photo-1509967419530-da38b4704bc6?auto=format&fit=crop&w=1200&q=95',
+        img: 'https://images.unsplash.com/photo-1680292783974-a9a336c10366?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D',
         art: artworks.cyberSun,
         desc: 'Streetwear-inspired heavyweight hoodie crafted for chilly nights with a bold cyberpunk horizon graphic.',
         specs: ['Plush brushed interior lining', 'Ribbed cuffs and waistband', 'Crack-resistant high-definition print'],
@@ -574,7 +668,7 @@
         bf: false,
         price: 14.99,
         oldPrice: null,
-        img: 'https://images.unsplash.com/photo-1514228742587-6b1558fcca3d?auto=format&fit=crop&w=1200&q=95',
+        img: 'https://media.istockphoto.com/id/2244347488/photo/a-colorful-coffee-mug-rests-on-a-kitchen-table-next-to-a-metal-fruit-basket-holding-a-single.webp?a=1&b=1&s=612x612&w=0&k=20&c=_49N3-vhUowixM6XgSUxb_y-2Q2LWIrMefK1fYMFJxY=',
         art: artworks.mugArt1,
         desc: 'Glossy white ceramic mug featuring a stunning multi-color wrap-around Cosmic Brew design and vibrant accent handle.',
         specs: ['ORCA-coated sublimation ceramic', '100% dishwasher and microwave safe', 'C-shaped ergonomic colored handle'],
@@ -587,7 +681,7 @@
         bf: true,
         price: 13.99,
         oldPrice: 19.99,
-        img: 'https://images.unsplash.com/photo-1577803645773-f96470509666?auto=format&fit=crop&w=1200&q=95',
+        img: 'https://media.istockphoto.com/id/1171418200/photo/beautiful-eastern-style-textured-ceramic-cup-of-coffee-with-smoke-over-dark-toned-background.webp?a=1&b=1&s=612x612&w=0&k=20&c=ZJQyz0Q1yuS5lanfTjk-gSl4_QEMEwc0KrYKGRCY-3Y=',
         art: artworks.mugArt2,
         desc: 'Start your coding or gaming session with this glossy accent ceramic mug wrapped in vibrant Neon Vibes graphics.',
         specs: ['Lead & BPA-free glossy ceramic', 'Wrap-around high-gloss colorful print', 'Shipped in crush-proof foam box'],
@@ -736,7 +830,7 @@
                 <strong>${prod.name}</strong> <span style="color:#38bdf8;">(${item.variant})</span><br>
                 <small>$${prod.price.toFixed(2)} &times; ${item.qty}</small>
               </div>
-              <button onclick="removeItem('${item.key}')" style="background:none;border:none;color:#ef4444;cursor:pointer;">Remove</button>
+              <button onclick="removeItem('${item.key}')" style="background:none;border:none;color:#ef4444;cursor:pointer;padding:6px;">Remove</button>
             </div>
           `;
         }).join('');
