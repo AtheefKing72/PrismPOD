@@ -1,0 +1,744 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+  <title>PrismDrop POD | Cashback Balance &amp; Withdrawal</title>
+  <style>
+    :root {
+      --bg: #090b10;
+      --card: #131722;
+      --card-hover: #191f2e;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --grad-1: linear-gradient(135deg, #ff007f, #ff7b00);
+      --grad-2: linear-gradient(135deg, #00f2fe, #4facfe);
+      --grad-3: linear-gradient(135deg, #a855f7, #ec4899);
+      --grad-gold: linear-gradient(135deg, #f59e0b, #fbbf24);
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    }
+
+    html, body {
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+      width: 100%;
+    }
+
+    .bf-banner {
+      background: var(--grad-1);
+      color: #fff;
+      text-align: center;
+      padding: 8px 12px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      letter-spacing: 0.3px;
+    }
+    .bf-badge {
+      background: #090b10;
+      color: #ff7b00;
+      padding: 2px 7px;
+      border-radius: 4px;
+      margin-right: 6px;
+      font-size: 0.72rem;
+      font-weight: 800;
+      display: inline-block;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 5%;
+      background: rgba(9, 11, 16, 0.96);
+      backdrop-filter: blur(10px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid #1e293b;
+      gap: 10px;
+    }
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 900;
+      background: var(--grad-2);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    nav a {
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.92rem;
+      white-space: nowrap;
+      transition: color 0.2s;
+    }
+    nav a:hover, nav a.active-link { color: #ff007f; }
+    .balance-pill {
+      background: #131722;
+      border: 1px solid #f59e0b;
+      color: #fbbf24;
+      padding: 8px 14px;
+      border-radius: 30px;
+      font-weight: 700;
+      font-size: 0.84rem;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .container {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 36px 5% 64px;
+    }
+
+    .hero {
+      text-align: center;
+      margin-bottom: 28px;
+    }
+    .hero h1 {
+      font-size: clamp(1.8rem, 4.5vw, 2.5rem);
+      margin-bottom: 8px;
+    }
+    .hero h1 span {
+      background: var(--grad-gold);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero p { color: var(--muted); font-size: 0.96rem; }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .stat-card {
+      background: var(--card);
+      border: 1px solid #1e293b;
+      border-radius: 16px;
+      padding: 18px;
+    }
+    .stat-label { font-size: 0.78rem; text-transform: uppercase; color: var(--muted); letter-spacing: 0.5px; }
+    .stat-value { font-size: 1.65rem; font-weight: 800; color: #4ade80; margin-top: 4px; }
+    .stat-value.gold { color: #fbbf24; }
+
+    .tiers-box {
+      background: var(--card);
+      border: 1px solid #2d3748;
+      border-radius: 16px;
+      padding: 18px;
+      margin-bottom: 24px;
+    }
+    .tiers-box h2 { font-size: 1.05rem; margin-bottom: 12px; color: #38bdf8; }
+    .tiers-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 12px;
+    }
+    .tier-item {
+      background: #0d1017;
+      border: 1px solid #1e293b;
+      border-radius: 12px;
+      padding: 14px;
+    }
+    .tier-item.unlocked { border-color: #4ade80; }
+    .tier-spend { font-weight: 700; font-size: 0.92rem; }
+    .tier-bonus { font-size: 1.2rem; font-weight: 800; color: #fbbf24; margin: 4px 0; }
+    .tier-status { font-size: 0.78rem; color: var(--muted); }
+
+    .withdraw-card {
+      background: var(--card);
+      border: 1px solid #2d3748;
+      border-radius: 18px;
+      padding: 22px;
+      margin-bottom: 28px;
+    }
+    .withdraw-card h2 { font-size: 1.2rem; margin-bottom: 6px; }
+    .withdraw-sub { font-size: 0.85rem; color: var(--muted); margin-bottom: 16px; }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+    .field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px; }
+    .field label { font-size: 0.84rem; font-weight: 600; color: #cbd5e1; }
+    .field input, .field select, .field textarea {
+      width: 100%;
+      background: #090b10;
+      border: 1px solid #334155;
+      color: #fff;
+      padding: 10px 12px;
+      border-radius: 10px;
+      font-size: 15px;
+    }
+    .field textarea { min-height: 76px; resize: vertical; }
+    .field input:focus, .field select:focus, .field textarea:focus {
+      outline: none;
+      border-color: #38bdf8;
+    }
+
+    .method-panel {
+      background: #0d1017;
+      border: 1px solid #1e293b;
+      border-radius: 12px;
+      padding: 14px;
+      margin-bottom: 14px;
+    }
+    .method-panel h3 {
+      font-size: 0.95rem;
+      color: #fbbf24;
+      margin-bottom: 10px;
+    }
+
+    .submit-btn {
+      background: var(--grad-1);
+      color: #fff;
+      border: none;
+      padding: 12px 22px;
+      border-radius: 10px;
+      font-weight: 800;
+      font-size: 0.95rem;
+      cursor: pointer;
+      min-height: 44px;
+    }
+    .submit-btn:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+
+    .status-msg {
+      margin-top: 12px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      line-height: 1.5;
+    }
+
+    .history-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+    }
+    .panel {
+      background: var(--card);
+      border: 1px solid #1e293b;
+      border-radius: 16px;
+      padding: 18px;
+    }
+    .panel h3 { font-size: 1rem; margin-bottom: 12px; color: #38bdf8; }
+    .log-item {
+      border-bottom: 1px solid #1e293b;
+      padding: 10px 0;
+      font-size: 0.84rem;
+    }
+    .log-item:last-child { border-bottom: none; }
+
+    footer {
+      background: #06080c;
+      padding: 30px 5%;
+      text-align: center;
+      border-top: 1px solid #1e293b;
+      color: var(--muted);
+    }
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+    .footer-links a {
+      color: #38bdf8;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.92rem;
+    }
+    .footer-links a:hover { text-decoration: underline; }
+
+    @media (max-width: 768px) {
+      header { flex-wrap: wrap; padding: 12px 4%; }
+      .logo { font-size: 1.35rem; order: 1; }
+      .balance-pill { order: 2; padding: 7px 11px; font-size: 0.78rem; }
+      nav {
+        order: 3;
+        width: 100%;
+        overflow-x: auto;
+        padding-top: 8px;
+        border-top: 1px solid #1e293b;
+        gap: 14px;
+        scrollbar-width: none;
+      }
+      nav::-webkit-scrollbar { display: none; }
+      nav a { font-size: 0.86rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="bf-banner">
+    <span class="bf-badge">ENDS NOV 30</span>
+    SPEND $150 → EARN $30 | SPEND $500 → EARN $200 | SPEND $1,000 → EARN $700
+  </div>
+
+  <header>
+    <a href="index.html" class="logo">PrismDrop POD</a>
+    <nav>
+      <a href="index.html">Shop</a>
+      <a href="collection.html">Drop 02 (New)</a>
+      <a href="balance-withdrawal.html" class="active-link">Balance &amp; Withdraw</a>
+      <a href="about.html">About Us</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="payment.html">Payment</a>
+    </nav>
+    <div class="balance-pill">💰 $<span id="nav-available">0.00</span></div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <h1>Cashback <span>Balance &amp; Withdrawal</span></h1>
+      <p>Track qualifying purchases, check your unlocked reward tier, and submit PayPal or Bank Transfer withdrawal details.</p>
+    </section>
+
+    <section class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-label">Qualifying Spend</div>
+        <div class="stat-value" id="stat-spent">$0.00</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Total Earned Bonus</div>
+        <div class="stat-value gold" id="stat-earned">$0.00</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Already Withdrawn</div>
+        <div class="stat-value" id="stat-withdrawn">$0.00</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Available to Withdraw</div>
+        <div class="stat-value gold" id="stat-available">$0.00</div>
+      </div>
+    </section>
+
+    <section class="tiers-box">
+      <h2>🎁 Cashback Qualification Tiers (Ends Nov 30, 2026)</h2>
+      <div class="tiers-grid" id="tiers-grid"></div>
+    </section>
+
+    <section class="withdraw-card">
+      <h2>💸 Request Cashback Withdrawal (PayPal or Bank Transfer)</h2>
+      <p class="withdraw-sub">Submit your payout details for verification and processing.</p>
+
+      <form id="withdraw-form" onsubmit="handleWithdrawSubmit(event)">
+        <div class="form-grid">
+          <div class="field">
+            <label for="wd-name">Customer Full Name *</label>
+            <input type="text" id="wd-name" placeholder="Full Name" required />
+          </div>
+          <div class="field">
+            <label for="wd-email">Customer Email *</label>
+            <input type="email" id="wd-email" placeholder="customer@example.com" required />
+          </div>
+          <div class="field">
+            <label for="wd-amount">Withdrawal Amount (USD) *</label>
+            <input type="number" id="wd-amount" step="0.01" min="0.01" placeholder="0.00" required />
+          </div>
+          <div class="field">
+            <label for="wd-method">Payout Method *</label>
+            <select id="wd-method" onchange="toggleMethodFields()">
+              <option value="PayPal">PayPal</option>
+              <option value="Bank Transfer">Bank Transfer</option>
+            </select>
+          </div>
+        </div>
+
+        <div id="paypal-fields" class="method-panel">
+          <h3>PayPal Payout Details</h3>
+          <div class="field" style="margin-bottom:0;">
+            <label for="wd-paypal-email">Customer PayPal Email Address *</label>
+            <input type="email" id="wd-paypal-email" placeholder="paypal-account@example.com" />
+          </div>
+        </div>
+
+        <div id="bank-fields" class="method-panel" style="display:none;">
+          <h3>Bank Transfer Details</h3>
+          <div class="form-grid">
+            <div class="field" style="margin-bottom:0;">
+              <label for="wd-bank-holder">Account Holder Name *</label>
+              <input type="text" id="wd-bank-holder" placeholder="Name on Bank Account" />
+            </div>
+            <div class="field" style="margin-bottom:0;">
+              <label for="wd-bank-name">Bank Name *</label>
+              <input type="text" id="wd-bank-name" placeholder="Bank Name" />
+            </div>
+            <div class="field" style="margin-bottom:0;">
+              <label for="wd-bank-branch">Bank Branch *</label>
+              <input type="text" id="wd-bank-branch" placeholder="Branch Name or Branch Code" />
+            </div>
+            <div class="field" style="margin-bottom:0;">
+              <label for="wd-bank-account">Account Number / IBAN *</label>
+              <input type="text" id="wd-bank-account" placeholder="Account Number or IBAN" />
+            </div>
+            <div class="field" style="margin-bottom:0;">
+              <label for="wd-bank-swift">SWIFT / BIC / Routing Code</label>
+              <input type="text" id="wd-bank-swift" placeholder="SWIFT / BIC or Routing Code" />
+            </div>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="wd-notes">Qualifying Order IDs &amp; Notes</label>
+          <textarea id="wd-notes" placeholder="Order IDs, shipping/verification notes, or extra payout instructions..."></textarea>
+        </div>
+
+        <button type="submit" class="submit-btn" id="wd-submit-btn">Submit Withdrawal Request</button>
+      </form>
+
+      <div id="wd-status" class="status-msg"></div>
+    </section>
+
+    <section class="history-grid">
+      <div class="panel">
+        <h3>🧾 Recorded Orders &amp; Qualification</h3>
+        <div id="orders-log"></div>
+      </div>
+      <div class="panel">
+        <h3>📤 Withdrawal Requests Log</h3>
+        <div id="payouts-log"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-links">
+      <a href="index.html">Shop</a>
+      <a href="collection.html">Drop 02 (New)</a>
+      <a href="balance-withdrawal.html">Balance &amp; Withdraw</a>
+      <a href="about.html">About Us</a>
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="payment.html">Payment Policy</a>
+    </div>
+    <p>&copy; 2026 PrismDrop POD Studio. All Rights Reserved.</p>
+  </footer>
+
+  <script>
+    // Configure your private email endpoint inside the script only (never rendered into page UI)
+    const PRIVATE_EMAIL_ENDPOINT = 'https://formspree.io/f/xppdlgld';
+
+    function getRewardsState() {
+      try {
+        const parsed = JSON.parse(localStorage.getItem('prismdrop_rewards_v1'));
+        return {
+          totalSpent: Number(parsed?.totalSpent) || 0,
+          withdrawnAmount: Number(parsed?.withdrawnAmount) || 0,
+          orders: Array.isArray(parsed?.orders) ? parsed.orders : [],
+          payouts: Array.isArray(parsed?.payouts) ? parsed.payouts : []
+        };
+      } catch (e) {
+        return { totalSpent: 0, withdrawnAmount: 0, orders: [], payouts: [] };
+      }
+    }
+
+    function saveRewardsState(state) {
+      localStorage.setItem('prismdrop_rewards_v1', JSON.stringify(state));
+    }
+
+    function calculateEarnedBonus(spent) {
+      if (spent >= 1000) return 700;
+      if (spent >= 500) return 200;
+      if (spent >= 150) return 30;
+      return 0;
+    }
+
+    function getAvailableBalance(state) {
+      return Math.max(0, calculateEarnedBonus(state.totalSpent) - state.withdrawnAmount);
+    }
+
+    function toggleMethodFields() {
+      const method = document.getElementById('wd-method').value;
+      document.getElementById('paypal-fields').style.display = method === 'PayPal' ? 'block' : 'none';
+      document.getElementById('bank-fields').style.display = method === 'Bank Transfer' ? 'block' : 'none';
+    }
+
+    function renderDashboard() {
+      const state = getRewardsState();
+      const earned = calculateEarnedBonus(state.totalSpent);
+      const available = getAvailableBalance(state);
+
+      document.getElementById('nav-available').innerText = available.toFixed(2);
+      document.getElementById('stat-spent').innerText = `$${state.totalSpent.toFixed(2)}`;
+      document.getElementById('stat-earned').innerText = `$${earned.toFixed(2)}`;
+      document.getElementById('stat-withdrawn').innerText = `$${state.withdrawnAmount.toFixed(2)}`;
+      document.getElementById('stat-available').innerText = `$${available.toFixed(2)}`;
+
+      const MIN_QUALIFYING_SPEND = 150;
+      const isUnlocked = state.totalSpent >= MIN_QUALIFYING_SPEND;
+      const amountInput = document.getElementById('wd-amount');
+      const submitBtn = document.getElementById('wd-submit-btn');
+      const statusEl = document.getElementById('wd-status');
+
+      if (!isUnlocked || available <= 0) {
+        amountInput.value = '';
+        amountInput.max = '0';
+        submitBtn.disabled = true;
+        if (!isUnlocked && !statusEl.innerText) {
+          const needed = Math.max(0, MIN_QUALIFYING_SPEND - state.totalSpent);
+          statusEl.style.color = '#fbbf24';
+          statusEl.innerText = `🔒 Withdrawal unlocks once qualifying spend reaches $150.00 ($${needed.toFixed(2)} more needed).`;
+        }
+      } else {
+        amountInput.max = available.toFixed(2);
+        if (!amountInput.value || Number(amountInput.value) > available) {
+          amountInput.value = available.toFixed(2);
+        }
+        submitBtn.disabled = false;
+        if (statusEl.innerText.startsWith('🔒 Withdrawal unlocks once qualifying spend reaches $150.00')) {
+          statusEl.innerText = '';
+        }
+      }
+
+      const tiers = [
+        { min: 150, bonus: 30, label: 'Tier 1' },
+        { min: 500, bonus: 200, label: 'Tier 2' },
+        { min: 1000, bonus: 700, label: 'Tier 3' }
+      ];
+
+      document.getElementById('tiers-grid').innerHTML = tiers.map(t => {
+        const unlocked = state.totalSpent >= t.min;
+        const remaining = Math.max(0, t.min - state.totalSpent);
+        return `
+          <div class="tier-item ${unlocked ? 'unlocked' : ''}">
+            <div class="tier-spend">${t.label}: Spend $${t.min.toLocaleString()}</div>
+            <div class="tier-bonus">Earn $${t.bonus.toLocaleString()}</div>
+            <div class="tier-status">${unlocked ? '✅ Qualified' : `🔒 $${remaining.toFixed(2)} more to unlock`}</div>
+          </div>
+        `;
+      }).join('');
+
+      const ordersEl = document.getElementById('orders-log');
+      if (state.orders.length === 0) {
+        ordersEl.innerHTML = '<p style="color:#94a3b8; font-size:0.84rem;">No orders recorded yet.</p>';
+      } else {
+        ordersEl.innerHTML = state.orders.map(o => {
+          const cust = o.customer || {};
+          const qualText = o.qualifiedForPromo ? `✅ ${o.qualificationTier || 'Qualified'}` : '⏳ Below $150 Threshold';
+          return `
+            <div class="log-item">
+              <strong>Order #${o.id}</strong> — $${Number(o.amount || 0).toFixed(2)} (${o.date || 'N/A'})<br>
+              <span style="color:#fbbf24;">${qualText}</span><br>
+              <small style="color:#94a3b8;">Customer: ${cust.name || 'N/A'} (${cust.email || 'N/A'})</small>
+            </div>
+          `;
+        }).join('');
+      }
+
+      const payoutsEl = document.getElementById('payouts-log');
+      if (state.payouts.length === 0) {
+        payoutsEl.innerHTML = '<p style="color:#94a3b8; font-size:0.84rem;">No withdrawal requests submitted yet.</p>';
+      } else {
+        payoutsEl.innerHTML = state.payouts.map(p => `
+          <div class="log-item">
+            <strong>$${Number(p.amount).toFixed(2)}</strong> via <strong>${p.method}</strong> (${p.date})<br>
+            <small style="color:#94a3b8;">Customer: ${p.customerName} (${p.customerEmail}) — ${p.statusLabel || 'Submitted'}</small>
+          </div>
+        `).join('');
+      }
+
+      const latestOrder = state.orders[0]?.customer;
+      if (latestOrder) {
+        const nameField = document.getElementById('wd-name');
+        const emailField = document.getElementById('wd-email');
+        if (!nameField.value && latestOrder.name) nameField.value = latestOrder.name;
+        if (!emailField.value && latestOrder.email) emailField.value = latestOrder.email;
+      }
+    }
+
+    function buildEmailBody(payload) {
+      const orderSummary = payload.orders.length
+        ? payload.orders.map(o => `- Order #${o.id}: $${Number(o.amount || 0).toFixed(2)} (${o.date || ''}) [${o.qualificationTier || ''}]`).join('\n')
+        : '- No local orders recorded on this browser';
+
+      const methodDetails = payload.method === 'PayPal'
+        ? `PayPal Email: ${payload.paypalEmail}`
+        : [
+            `Account Holder: ${payload.bankHolder}`,
+            `Bank Name: ${payload.bankName}`,
+            `Bank Branch: ${payload.bankBranch}`,
+            `Account Number / IBAN: ${payload.bankAccount}`,
+            `SWIFT / BIC / Routing: ${payload.bankSwift || 'N/A'}`
+          ].join('\n');
+
+      return [
+        'PRISMDROP POD — QUALIFIED CASHBACK WITHDRAWAL REQUEST',
+        '====================================================',
+        `Customer Name: ${payload.customerName}`,
+        `Customer Email: ${payload.customerEmail}`,
+        `Payout Method: ${payload.method}`,
+        `Requested Amount (USD): $${payload.amount.toFixed(2)}`,
+        `Total Qualifying Spend: $${payload.totalSpent.toFixed(2)}`,
+        `Total Earned Bonus: $${payload.totalEarned.toFixed(2)}`,
+        `Available Balance Before Request: $${payload.availableBefore.toFixed(2)}`,
+        '',
+        'PAYOUT DESTINATION DETAILS:',
+        methodDetails,
+        '',
+        'QUALIFYING ORDERS:',
+        orderSummary,
+        '',
+        `Notes: ${payload.notes || 'None'}`
+      ].join('\n');
+    }
+
+    async function handleWithdrawSubmit(e) {
+      e.preventDefault();
+      const statusEl = document.getElementById('wd-status');
+      const state = getRewardsState();
+      const earned = calculateEarnedBonus(state.totalSpent);
+      const available = getAvailableBalance(state);
+
+      if (state.totalSpent < 150) {
+        const needed = (150 - state.totalSpent).toFixed(2);
+        statusEl.style.color = '#f87171';
+        statusEl.innerText = `🔒 Withdrawal is locked until qualifying spend reaches $150.00 ($${needed} more needed).`;
+        return;
+      }
+
+      if (earned <= 0 || available <= 0) {
+        statusEl.style.color = '#f87171';
+        statusEl.innerText = '❌ No qualified cashback balance is available to withdraw.';
+        return;
+      }
+
+      const customerName = document.getElementById('wd-name').value.trim();
+      const customerEmail = document.getElementById('wd-email').value.trim();
+      const amount = Number(document.getElementById('wd-amount').value);
+      const method = document.getElementById('wd-method').value;
+      const notes = document.getElementById('wd-notes').value.trim();
+
+      if (!customerName || !customerEmail || !Number.isFinite(amount) || amount <= 0 || amount > available) {
+        statusEl.style.color = '#f87171';
+        statusEl.innerText = `❌ Please enter a valid withdrawal amount between $0.01 and $${available.toFixed(2)}.`;
+        return;
+      }
+
+      let paypalEmail = '';
+      let bankHolder = '';
+      let bankName = '';
+      let bankBranch = '';
+      let bankAccount = '';
+      let bankSwift = '';
+
+      if (method === 'PayPal') {
+        paypalEmail = document.getElementById('wd-paypal-email').value.trim();
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(paypalEmail)) {
+          statusEl.style.color = '#f87171';
+          statusEl.innerText = '❌ Please enter a valid PayPal email address.';
+          return;
+        }
+      } else {
+        bankHolder = document.getElementById('wd-bank-holder').value.trim();
+        bankName = document.getElementById('wd-bank-name').value.trim();
+        bankBranch = document.getElementById('wd-bank-branch').value.trim();
+        bankAccount = document.getElementById('wd-bank-account').value.trim();
+        bankSwift = document.getElementById('wd-bank-swift').value.trim();
+        if (!bankHolder || !bankName || !bankBranch || !bankAccount) {
+          statusEl.style.color = '#f87171';
+          statusEl.innerText = '❌ Please fill out Account Holder Name, Bank Name, Bank Branch, and Account Number / IBAN.';
+          return;
+        }
+      }
+
+      if (!PRIVATE_EMAIL_ENDPOINT) {
+        statusEl.style.color = '#f87171';
+        statusEl.innerText = '❌ Withdrawal email delivery is not configured yet.';
+        return;
+      }
+
+      const payload = {
+        customerName,
+        customerEmail,
+        amount,
+        method,
+        paypalEmail,
+        bankHolder,
+        bankName,
+        bankBranch,
+        bankAccount,
+        bankSwift,
+        notes,
+        totalSpent: state.totalSpent,
+        totalEarned: earned,
+        availableBefore: available,
+        orders: state.orders
+      };
+
+      const emailBody = buildEmailBody(payload);
+      const subject = `PrismDrop Cashback Withdrawal (${method} - $${amount.toFixed(2)}) - ${customerName}`;
+
+      try {
+        const resp = await fetch(PRIVATE_EMAIL_ENDPOINT, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify({
+            name: customerName,
+            email: customerEmail,
+            _replyto: customerEmail,
+            _subject: subject,
+            subject,
+            payout_method: method,
+            amount_usd: amount.toFixed(2),
+            paypal_email: paypalEmail || 'N/A',
+            bank_holder: bankHolder || 'N/A',
+            bank_name: bankName || 'N/A',
+            bank_branch: bankBranch || 'N/A',
+            bank_account: bankAccount || 'N/A',
+            bank_swift: bankSwift || 'N/A',
+            message: emailBody
+          })
+        });
+
+        if (!resp.ok) {
+          throw new Error(`HTTP ${resp.status}`);
+        }
+
+        state.withdrawnAmount += amount;
+        state.payouts.unshift({
+          amount,
+          method,
+          customerName,
+          customerEmail,
+          statusLabel: 'Sent for review',
+          date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+        });
+        saveRewardsState(state);
+        renderDashboard();
+
+        statusEl.style.color = '#4ade80';
+        statusEl.innerText = '✅ Your withdrawal details have been submitted securely for review.';
+      } catch (err) {
+        console.error('Submission error:', err);
+        statusEl.style.color = '#f87171';
+        statusEl.innerText = '❌ Could not submit your withdrawal request right now. Please try again.';
+      }
+    }
+
+    renderDashboard();
+  </script>
+</body>
+</html>
+Analyzing

@@ -1,10 +1,11 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta name="google-site-verification" content="iTC83U7IUJphbkowCE4eU0A5N4SNmKie31E-8uoBb1o" />
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
-  <title>PrismDrop POD | Custom Printed Tees, Hoodies, Mugs & Rolled Posters</title>
+  <title>PrismDrop POD | Custom Printed Tees, Hoodies, Mugs &amp; Rolled Posters</title>
   <style>
     :root {
       --bg: #090b10;
@@ -15,12 +16,25 @@
       --grad-1: linear-gradient(135deg, #ff007f, #ff7b00);
       --grad-2: linear-gradient(135deg, #00f2fe, #4facfe);
       --grad-3: linear-gradient(135deg, #a855f7, #ec4899);
+      --grad-gold: linear-gradient(135deg, #f59e0b, #fbbf24);
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; }
-    html, body { background: var(--bg); color: var(--text); line-height: 1.6; overflow-x: hidden; width: 100%; }
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    }
 
-    /* Black Friday Banner */
+    html, body {
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+      width: 100%;
+    }
+
+    /* Black Friday & Cashback Banner */
     .bf-banner {
       background: var(--grad-1);
       color: #fff;
@@ -29,16 +43,30 @@
       font-weight: 700;
       font-size: 0.85rem;
       letter-spacing: 0.3px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
     }
     .bf-badge {
       background: #090b10;
       color: #ff7b00;
       padding: 2px 7px;
       border-radius: 4px;
-      margin-right: 6px;
       font-size: 0.72rem;
       font-weight: 800;
       display: inline-block;
+    }
+    .banner-btn {
+      background: #090b10;
+      color: #fbbf24;
+      border: 1px solid #fbbf24;
+      padding: 2px 10px;
+      border-radius: 20px;
+      font-size: 0.76rem;
+      font-weight: 800;
+      text-decoration: none;
     }
 
     /* Header */
@@ -78,7 +106,25 @@
       font-size: 0.92rem;
       white-space: nowrap;
     }
-    nav a:hover { color: #ff007f; }
+    nav a:hover, nav a.active-link { color: #ff007f; }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+    .balance-pill {
+      background: #131722;
+      border: 1px solid #f59e0b;
+      color: #fbbf24;
+      padding: 8px 14px;
+      border-radius: 30px;
+      font-weight: 700;
+      font-size: 0.84rem;
+      text-decoration: none;
+      white-space: nowrap;
+    }
     .cart-btn {
       background: var(--grad-3);
       border: none;
@@ -105,7 +151,33 @@
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
-    .hero p { color: var(--muted); max-width: 640px; margin: 0 auto; font-size: 0.98rem; }
+    .hero p { color: var(--muted); max-width: 650px; margin: 0 auto 16px; font-size: 0.98rem; }
+
+    .cashback-strip {
+      max-width: 820px;
+      margin: 0 auto;
+      background: #131722;
+      border: 1px solid #2d3748;
+      border-radius: 14px;
+      padding: 12px 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      font-size: 0.85rem;
+    }
+    .cashback-strip strong { color: #fbbf24; }
+    .cashback-strip a {
+      background: var(--grad-gold);
+      color: #090b10;
+      padding: 6px 15px;
+      border-radius: 20px;
+      font-weight: 800;
+      text-decoration: none;
+      font-size: 0.8rem;
+      white-space: nowrap;
+    }
 
     /* Categories */
     .categories {
@@ -173,7 +245,7 @@
     .card:hover .mockup-stage img.base-photo {
       transform: scale(1.04);
     }
-    
+
     .print-overlay {
       position: absolute;
       pointer-events: none;
@@ -240,6 +312,7 @@
       font-size: 0.88rem;
       cursor: pointer;
       min-height: 36px;
+      max-width: 65%;
     }
 
     .price-row { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
@@ -385,8 +458,15 @@
         font-size: 1.35rem;
         order: 1;
       }
-      .cart-btn {
+      .header-actions {
         order: 2;
+        gap: 6px;
+      }
+      .balance-pill {
+        padding: 7px 11px;
+        font-size: 0.78rem;
+      }
+      .cart-btn {
         padding: 8px 15px;
         font-size: 0.85rem;
       }
@@ -436,43 +516,49 @@
       }
     }
   </style>
-<script id="aclib" type="text/javascript" src="//acscdn.com/script/aclib.js"></script>
-<script type="text/javascript">
-    aclib.runAutoTag({
-        zoneId: 'fkal4z1vu4',
-    });
-</script>
-<script type="text/javascript">
-    aclib.runVideoSlider({
-        zoneId: '12462822',
-    });
-</script>
-
+  <script id="aclib" type="text/javascript" src="//acscdn.com/script/aclib.js"></script>
+  <script type="text/javascript">
+    if (window.aclib && typeof aclib.runAutoTag === 'function') {
+      aclib.runAutoTag({ zoneId: 'fkal4z1vu4' });
+    }
+    if (window.aclib && typeof aclib.runVideoSlider === 'function') {
+      aclib.runVideoSlider({ zoneId: '12462822' });
+    }
+  </script>
 </head>
-<script data-cfasync="false" src="https://abscloud.org/1/c1b28e14ccd125129f04d7454bd5192a"></script>
 <body>
+  <script data-cfasync="false" src="https://abscloud.org/1/c1b28e14ccd125129f04d7454bd5192a"></script>
 
   <div class="bf-banner">
     <span class="bf-badge">BLACK FRIDAY</span>
-    UP TO 40% OFF ALL CUSTOM MERCH — LIMITED TIME!
+    <span>UP TO 40% OFF ALL CUSTOM MERCH — LIMITED TIME!</span>
+    <a href="balance-withdrawal.html" class="banner-btn">Balance &amp; Withdraw →</a>
   </div>
 
   <header>
     <a href="index.html" class="logo">PrismDrop POD</a>
     <nav>
-      <a href="index.html">Shop</a>
+      <a href="index.html" class="active-link">Shop</a>
       <a href="collection.html">Drop 02 (New)</a>
       <a onclick="filterProducts('black-friday')">🔥 Deals</a>
+      <a href="balance-withdrawal.html">Balance &amp; Withdraw</a>
       <a href="about.html">About Us</a>
       <a href="privacy.html">Privacy</a>
       <a href="payment.html">Payment</a>
     </nav>
-    <button class="cart-btn" onclick="toggleCart()">Cart (<span id="cart-count">0</span>)</button>
+    <div class="header-actions">
+      <a href="balance-withdrawal.html" class="balance-pill">💰 $<span id="header-balance">0.00</span></a>
+      <button class="cart-btn" onclick="toggleCart()">Cart (<span id="cart-count">0</span>)</button>
+    </div>
   </header>
 
   <section class="hero">
     <h1>Wear &amp; Hang <span>Original Art</span></h1>
     <p>Explore exclusive graphic designs printed on demand across premium T-Shirts, Heavyweight Hoodies, Color-Accent Mugs, and Rolled Wall Art Posters.</p>
+    <div class="cashback-strip">
+      <span>🎁 <strong>Cashback Offer (Ends Nov 30, 2026):</strong> Spend <strong>$150</strong> → <strong>$30</strong> | <strong>$500</strong> → <strong>$200</strong> | <strong>$1,000</strong> → <strong>$700</strong></span>
+      <a href="balance-withdrawal.html">See Balance &amp; Withdraw →</a>
+    </div>
   </section>
 
   <div class="categories">
@@ -521,7 +607,7 @@
       <h3>Checkout &amp; Cart</h3>
       <button class="close-drawer-btn" onclick="toggleCart()" aria-label="Close Cart">&times;</button>
     </div>
-    
+
     <div class="cart-items" id="cart-items"></div>
     <div class="total-box">
       <span>Total:</span>
@@ -547,6 +633,8 @@
   <footer>
     <div class="footer-links">
       <a href="index.html">Home</a>
+      <a href="collection.html">Drop 02 (New)</a>
+      <a href="balance-withdrawal.html">Balance &amp; Withdraw</a>
       <a href="about.html">About Us</a>
       <a href="privacy.html">Privacy Policy</a>
       <a href="payment.html">Payment Policy</a>
@@ -554,7 +642,7 @@
     <p>&copy; 2026 PrismDrop POD Studio. All Rights Reserved.</p>
   </footer>
 
-  <script src="https://www.paypal.com/sdk/js?client-id=sb&currency=USD&enable-funding=card"></script>
+  <script src="https://www.paypal.com/sdk/js?client-id=BAAQnnBqqFcv6UFedRqZxhuc2vSTteXDmx_8OBX0YcOj9OjhX0NIPu-ibCZ8Brk7mD7gFsOwMKRo7bddzo&currency=USD&enable-funding=card"></script>
 
   <script>
     const artworks = {
@@ -574,6 +662,7 @@
         <text x="100" y="176" text-anchor="middle" fill="#ff007f" font-family="sans-serif" font-weight="900" font-size="14" letter-spacing="2">ZERO GRAVITY</text>
       </svg>`,
       vaporGrid: `<svg viewBox="0 0 200 200" width="100%" height="100%">
+        <defs><linearGradient id="vg1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#ff007f"/><stop offset="100%" stop-color="#00f2fe"/></linearGradient></defs>
         <rect x="25" y="25" width="150" height="150" rx="14" fill="none" stroke="#ff007f" stroke-width="5"/>
         <polygon points="100,42 152,135 48,135" fill="none" stroke="#00f2fe" stroke-width="5"/>
         <circle cx="100" cy="102" r="22" fill="#ff7b00"/>
@@ -731,6 +820,33 @@
 
     let cart = [];
 
+    function getRewardsState() {
+      try {
+        const parsed = JSON.parse(localStorage.getItem('prismdrop_rewards_v1'));
+        return {
+          totalSpent: Number(parsed?.totalSpent) || 0,
+          withdrawnAmount: Number(parsed?.withdrawnAmount) || 0,
+          orders: Array.isArray(parsed?.orders) ? parsed.orders : [],
+          payouts: Array.isArray(parsed?.payouts) ? parsed.payouts : []
+        };
+      } catch (e) {
+        return { totalSpent: 0, withdrawnAmount: 0, orders: [], payouts: [] };
+      }
+    }
+
+    function calculateEarnedBonus(spent) {
+      if (spent >= 1000) return 700;
+      if (spent >= 500) return 200;
+      if (spent >= 150) return 30;
+      return 0;
+    }
+
+    function updateHeaderBalance() {
+      const state = getRewardsState();
+      const available = Math.max(0, calculateEarnedBonus(state.totalSpent) - state.withdrawnAmount);
+      document.getElementById('header-balance').innerText = available.toFixed(2);
+    }
+
     function renderProducts(items) {
       const grid = document.getElementById('product-grid');
       grid.innerHTML = items.map(p => `
@@ -777,7 +893,7 @@
       document.getElementById('modal-title').innerText = p.name;
       document.getElementById('modal-desc').innerText = p.desc;
       document.getElementById('modal-specs').innerHTML = p.specs.map(s => `<li>${s}</li>`).join('');
-      
+
       const select = document.getElementById('modal-variant');
       select.innerHTML = p.variants.map(v => `<option value="${v}">${v}</option>`).join('');
 
@@ -813,7 +929,8 @@
     }
 
     function addToCart(id, chosenVariant) {
-      const variant = chosenVariant || document.getElementById(`var-${id}`).value;
+      const selectEl = document.getElementById(`var-${id}`);
+      const variant = chosenVariant || (selectEl ? selectEl.value : '');
       const key = `${id}__${variant}`;
       const existing = cart.find(i => i.key === key);
       if (existing) existing.qty++;
@@ -832,10 +949,11 @@
       let total = 0, count = 0;
 
       if (cart.length === 0) {
-        container.innerHTML = '<p style="color:#94a3b8; font-size:0.85rem; padding:10px 0;">Your cart is empty. Add a product to checkout.</p>';
+        container.innerHTML = '<p style="color:#94a3b8; font-size:0.85rem; padding:10px 0;">Your cart is empty. Add an item to checkout.</p>';
       } else {
         container.innerHTML = cart.map(item => {
           const prod = catalog.find(p => p.id === item.id);
+          if (!prod) return '';
           total += prod.price * item.qty;
           count += item.qty;
           return `
@@ -863,10 +981,48 @@
       document.getElementById('cart-drawer').classList.toggle('open');
     }
 
+    function validateCheckoutInputs() {
+      if (cart.length === 0) {
+        alert('Your cart is empty! Please add a product first.');
+        return null;
+      }
+
+      const name = document.getElementById('ship-name').value.trim();
+      const address = document.getElementById('ship-address').value.trim();
+      const city = document.getElementById('ship-city').value.trim();
+      const country = document.getElementById('ship-country').value.trim();
+      const zip = document.getElementById('ship-zip').value.trim();
+
+      if (!name || !address || !city || !country || !zip) {
+        alert('Please fill out all shipping details before paying!');
+        return null;
+      }
+
+      let total = 0;
+      const itemNames = [];
+
+      cart.forEach(item => {
+        const prod = catalog.find(p => p.id === item.id);
+        if (!prod) return;
+        total += prod.price * item.qty;
+        itemNames.push(`${prod.name} [${item.variant}] x${item.qty}`);
+      });
+
+      if (total <= 0) {
+        alert('Unable to calculate cart total. Please re-add your items.');
+        return null;
+      }
+
+      return {
+        total,
+        description: `Order: ${itemNames.join(', ')} | Ship: ${name}, ${address}, ${city}, ${country} ${zip}`.slice(0, 127)
+      };
+    }
+
     function mountPayPalButtons() {
       const container = document.getElementById('paypal-button-container');
 
-      if (!window.paypal) {
+      if (!window.paypal || typeof paypal.Buttons !== 'function') {
         container.innerHTML = `
           <div style="background:#fee2e2; color:#991b1b; padding:10px; border-radius:6px; font-size:0.8rem; font-weight:600;">
             ⚠️ Payment buttons could not load. Please check your internet connection or verify your PayPal Client ID.
@@ -882,63 +1038,69 @@
           label: 'paypal'
         },
         createOrder: (data, actions) => {
-          if (cart.length === 0) {
-            alert('Your cart is empty! Please add a product first.');
-            return;
+          const checkoutData = validateCheckoutInputs();
+          if (!checkoutData) {
+            return Promise.reject(new Error('Validation failed'));
           }
-
-          const name = document.getElementById('ship-name').value.trim();
-          const address = document.getElementById('ship-address').value.trim();
-          const city = document.getElementById('ship-city').value.trim();
-          const country = document.getElementById('ship-country').value.trim();
-          const zip = document.getElementById('ship-zip').value.trim();
-
-          if (!name || !address || !city || !country || !zip) {
-            alert('Please fill out all shipping details before paying!');
-            return;
-          }
-
-          let total = 0;
-          const itemNames = [];
-
-          cart.forEach(item => {
-            const prod = catalog.find(p => p.id === item.id);
-            total += prod.price * item.qty;
-            itemNames.push(`${prod.name} [${item.variant}] x${item.qty}`);
-          });
 
           return actions.order.create({
             purchase_units: [{
-              description: `Order: ${itemNames.join(', ')} | Ship: ${name}, ${address}, ${city}, ${country} ${zip}`.slice(0, 127),
+              description: checkoutData.description,
               amount: {
                 currency_code: 'USD',
-                value: total.toFixed(2)
+                value: checkoutData.total.toFixed(2)
               }
             }]
           });
         },
         onApprove: (data, actions) => {
           return actions.order.capture().then(details => {
+            let orderAmount = 0;
+            cart.forEach(item => {
+              const prod = catalog.find(p => p.id === item.id);
+              if (prod) orderAmount += prod.price * item.qty;
+            });
+
+            const deadline = new Date('2026-11-30T23:59:59');
+            const state = getRewardsState();
+            if (new Date() <= deadline) {
+              state.totalSpent += orderAmount;
+              state.orders.unshift({
+                id: details.id,
+                amount: orderAmount,
+                date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+              });
+              localStorage.setItem('prismdrop_rewards_v1', JSON.stringify(state));
+              updateHeaderBalance();
+            }
+
             document.getElementById('payment-status').style.color = '#4ade80';
-            document.getElementById('payment-status').innerText =
-              `✅ Payment successful! (Order ID: ${details.id}). Your custom POD design & shipping details are confirmed!`;
+            document.getElementById('payment-status').innerHTML =
+              `✅ Payment successful! (Order ID: ${details.id}). <a href="balance-withdrawal.html" style="color:#fbbf24;text-decoration:underline;">View Balance &amp; Withdraw →</a>`;
             cart = [];
             updateCartUI();
           });
         },
+        onCancel: () => {
+          document.getElementById('payment-status').style.color = '#fbbf24';
+          document.getElementById('payment-status').innerText =
+            '⚠️ Payment was cancelled before completion.';
+        },
         onError: (err) => {
           console.error('PayPal/Card Checkout Error:', err);
+          if (err && err.message === 'Validation failed') return;
           document.getElementById('payment-status').style.color = '#f87171';
           document.getElementById('payment-status').innerText =
-            '❌ Payment failed or cancelled. Please verify your card/PayPal details and try again.';
+            '❌ Payment failed or could not be processed. Please check your details and try again.';
         }
       }).render('#paypal-button-container');
     }
 
     renderProducts(catalog);
     updateCartUI();
+    updateHeaderBalance();
     mountPayPalButtons();
   </script>
-  <script data-cfasync="false" src="https://bauval.org/14/d71341e2b5b9729c25b2ddb7ba2bdff6"></script>
 </body>
 </html>
+Analyzing
